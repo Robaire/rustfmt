@@ -583,8 +583,13 @@ fn format(opt: Opt) -> Result<i32> {
                 })
                 .collect();
 
-            if format_report.has_failing_errors(file_config_map) {
-                return Ok(1);
+            match opt.emit.unwrap() {
+                Json => {}
+                _ => {
+                    if format_report.has_failing_errors(file_config_map) {
+                        return Ok(1);
+                    }
+                }
             }
         }
     }
